@@ -1,4 +1,4 @@
-# Waves IDE
+# Acryl IDE
 ## About
 This repository contains [Waves Web IDE](https://ide.wavesplatform.com) for RIDE smart contracts
 You can set default seed, default network byte and node url via settings.

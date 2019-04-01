@@ -1,5 +1,5 @@
 {
-  "name": "waves-ide",
+  "name": "acryl-ide",
   "version": "0.9.5",
   "description": "Beta version of very first Waves smart contact IDE",
   "main": "index.js",
@@ -10,7 +10,7 @@
     "buildMonaco": "node scripts/buildMonaco.js prod",
     "dist": "webpack --config webpack.config.js --env"
   },
-  "author": "wavesplatform",
+  "author": "acrylplatform",
   "license": "ISC",
   "dependencies": {
     "@material-ui/core": "^3.9.2",
