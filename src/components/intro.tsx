@@ -15,14 +15,13 @@ export class Intro extends React.Component {
     super(props);
     axios.get(baseUri + main)
       .then(x => {
-        this.content = x.data;
+        this.content = x.data.replace(/Waves/gi, 'Acryl');
         this.content = this.content.replace(image, (_, uri) => {
           return `![image](${baseUri}${uri})`;
         }).replace(link, (_, uri) => {
           return _.replace(uri, baseUri + uri);
         });
         this.forceUpdate();
-        this.content = this.content.replace(/Waves/g, 'Acryl');
       }).catch(x => {
       });
   }

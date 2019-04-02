@@ -100,7 +100,7 @@ class NewMenuButton extends React.Component<INewMenuButtonProps, INewMenuButtonS
                 <Button
                     className={classes!.root}
                     //inline backgroundColor disables hover
-                    style={{backgroundColor: '#1f5af6'}}
+                    style={{backgroundColor: '#ff5e39'}}
                     variant="text"
                     aria-owns={anchorEl ? 'new-menu' : undefined}
                     aria-haspopup="true"

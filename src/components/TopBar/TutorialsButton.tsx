@@ -8,7 +8,7 @@ interface ITutorialsButtonProps {
 
 export default ({infoLink}: ITutorialsButtonProps) => (
             <Button
-                style={{backgroundColor: '#1f5af6', color: 'white', marginLeft: '15px'}}
+                style={{backgroundColor: '#ff5e39', color: 'white', marginLeft: '15px'}}
                 onClick={() => {window.open(infoLink, '_blank'); }}
             >
                 <HelpIcon/>
