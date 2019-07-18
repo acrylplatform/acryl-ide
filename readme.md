@@ -15,6 +15,7 @@ cp s3.config.default.js s3.config.js
 make sure you have node-js > 10.0, else https://nodejs.org/en/download/package-manager/
 
 ```npm
+npm i cdnizer
 npm install
 ```
 
