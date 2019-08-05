@@ -73,7 +73,7 @@ webpack({
                                 require('postcss-flexbugs-fixes'),
                                 require('postcss-inline-svg'),
                                 autoprefixer({
-                                    browsers: [
+                                    overrideBrowserslist: [
                                         '>1%',
                                         'last 4 versions',
                                         'Firefox ESR',
