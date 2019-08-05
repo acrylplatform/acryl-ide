@@ -93,6 +93,7 @@ class AccountsTabComponent extends React.Component<IAccountsTabProps, { expanded
                     <Button
                         variant="contained"
                         onClick={this.handleAdd}
+                        style={{backgroundColor: '#ff5e39'}}
                         color="primary">
                         <AddIcon/>
                         Add account

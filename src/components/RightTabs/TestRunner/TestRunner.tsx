@@ -102,6 +102,7 @@ class TestRunner extends React.Component<IProps, IState> {
                         fullWidth
                         children="Run full test"
                         color="primary"
+                        style={{backgroundColor: '#ff5e39'}}
                         onClick={this.handleRunTest}
                     />
                 </div>

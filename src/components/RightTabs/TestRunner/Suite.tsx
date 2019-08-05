@@ -38,9 +38,9 @@ const Suite = (props: IProps) => {
                 <div
                     className="b-suite_runBtn"
                     style={{
-                        border: '1px solid #0a56ff',
+                        border: '1px solid #ff5e39',
                         borderRadius: '4px',
-                        background: '#0a56ff',
+                        background: '#ff5e39',
                         padding: '0 5px',
                         color: '#fff',
                         cursor: 'pointer',
