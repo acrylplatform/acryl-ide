@@ -101,7 +101,7 @@ const bindReplMethodsToRunner = () => {
 const bindWavesTransactionsLibToRunner = () => {
     try {
         addToRunnerScope('waitForTx', async (txId: string, timeout: number = 20000, apiBase?: string) => {
-            await waitForTx(txId, timeout, apiBase || iframeWindow.env.API_BASE);
+            await waitForTx(txId, {timeout: timeout, apiBase: apiBase || iframeWindow.env.API_BASE});
         }); 
     } catch (error) {
         console.error(error);

@@ -13,7 +13,7 @@ import ReactResizeDetector from 'react-resize-detector';
 import debounce from 'debounce';
 import { UserDialog } from '../UserDialog';
 import { signTx, broadcast } from '@waves/waves-transactions';
-import { validators, schemas, schemaTypeMap } from '@waves/waves-transactions/dist/schemas';
+import { schemas, schemaTypeMap, validators } from '@waves/tx-json-schemas';
 import { signViaKeeper } from '@utils/waveskeeper';
 import TransactionSigningForm from './TransactionSigningForm';
 import { range } from '@utils/range';
