@@ -4,6 +4,8 @@ import Tab from '@material-ui/core/Tab';
 import TabLabel from './EditorTab';
 import { FILE_TYPE, FilesStore, IFile, TAB_TYPE, TabsStore, TTab } from '@src/mobx-store';
 import { inject, observer } from 'mobx-react';
+import { Theme } from '@material-ui/core/styles';
+import withStyles from '@material-ui/core/styles/withStyles';
 
 const UNKNOWN_FILE: IFile = {
     id: 'UNKNOWN',
@@ -11,6 +13,12 @@ const UNKNOWN_FILE: IFile = {
     name: 'UNKNOWN',
     content: '',
 };
+
+const styles = (theme: Theme): any => ({
+    tabsIndicator: {
+        backgroundColor: '#ff5e39',
+    }
+});
 
 
 // const mapStateToProps = (state: RootState) => ({
@@ -33,6 +41,7 @@ interface IInjectedProps {
 }
 
 interface IEditorTabsProps extends IInjectedProps {
+    classes?: any
 }
 
 @inject('tabsStore', 'filesStore')
@@ -41,6 +50,7 @@ class EditorTabs extends Component<IEditorTabsProps, any> {
 
     render() {
         const { tabsStore, filesStore } = this.props;
+        const { classes } = this.props;
         // const {openedFiles, selectedIndex, handleSelect, handleClose, handleRename} = this.props;
 
         const tabs = tabsStore!.tabs;
@@ -69,7 +79,7 @@ class EditorTabs extends Component<IEditorTabsProps, any> {
         return (
             <Tabs style={{backgroundColor: 'rgb(248, 249, 251)'}}
                   variant="scrollable"
-                  indicatorColor="primary"
+                  classes={{ indicator: classes!.tabsIndicator }}
                   onChange={(_, value) => tabsStore!.selectTab(value)}
                   value={selectedIndex}>
                 {tabsComponents}
@@ -78,4 +88,4 @@ class EditorTabs extends Component<IEditorTabsProps, any> {
     }
 }
 
-export default EditorTabs;
+export default withStyles(styles)(EditorTabs);

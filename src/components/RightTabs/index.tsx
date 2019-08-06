@@ -21,6 +21,9 @@ const styles = (theme: Theme): any => ({
         backgroundColor: '#f8f9fb',
         color: '#4e5c6e',
         textTransform: 'none'
+    },
+    tabsIndicator: {
+        backgroundColor: '#ff5e39',
     }
 });
 const TabContainer = (props: { children: ReactNode, containerClass?: string }) => {
@@ -61,7 +64,7 @@ class RightTabsComponent extends Component<IRightTabsComponentProps, { value: st
                       onChange={this.handleChange}
                       centered
                       variant="fullWidth"
-                      indicatorColor="primary"
+                      classes={{ indicator: classes!.tabsIndicator }}
                 >
                     <Tab
                         value={'accounts'}
