@@ -1,15 +1,23 @@
 import * as monaco from 'monaco-editor/esm/vs/editor/editor.api';
+import { languages } from 'monaco-editor/esm/vs/editor/editor.api';
 import { LspService } from '@waves/ride-language-server/LspService';
-//TO DO rename txTypes to transactionClasses
-import { transactionClasses as txTypes  } from '@waves/ride-language-server/suggestions';
+import { Suggestions } from '@waves/ride-language-server/suggestions';
 import { MonacoLspServiceAdapter } from '@utils/MonacoLspServiceAdapter';
+import testTypings from './json-data/test-typings.json';
+import ModuleKind = languages.typescript.ModuleKind;
+
+
+const suggestions = new Suggestions();
+suggestions.updateSuggestions(3);
+const transactionClasses = suggestions.types.find(({name}) => name === 'Transaction')!.type;
 
 export const languageService = new MonacoLspServiceAdapter(new LspService());
 
 export const LANGUAGE_ID = 'ride';
-export const THEME_ID = 'wavesDefaultTheme';
+export const DEFAULT_THEME_ID = 'wavesDefaultTheme';
+export const DARK_THEME_ID = 'wavesDarkTheme';
 
-export default function setupMonaco(){
+export default function setupMonaco() {
     // Since packaging is done by you, you need
 // to instruct the editor how you named the
 // bundles that contain the web workers.
@@ -29,35 +37,39 @@ export default function setupMonaco(){
             }
             return './editor.worker.bundle.js';
         }
-    }
-    
-    
+    };
+
+
     // setup ride language
 
     monaco.languages.register({
         id: LANGUAGE_ID,
     });
-
-    const keywords = ['let', 'true', 'false', 'if', 'then', 'else', 'match', 'case', 'base58','func'];
-
+    const keywords = ['let', 'true', 'false', 'if', 'then', 'else', 'match', 'case', 'base58', 'base64', 'base16', 'func'];
     const language = {
         tokenPostfix: '.',
         tokenizer: {
             root: [
                 {
                     action: {token: 'types'},
-                    regex: /\bTransferTransaction|IssueTransaction|ReissueTransaction|BurnTransaction|LeaseTransaction|LeaseCancelTransaction|MassTransferTransaction|CreateAliasTransaction|SetScriptTransaction|SponsorFeeTransaction|ExchangeTransaction|DataTransaction|SetAssetScriptTransaction\b/
+                    regex: new RegExp(`(${
+                        suggestions.types.map(({name}) => name)
+                            .sort((a, b) => a > b ? -1 : 1)
+                            .join('|')
+                        })`)
                 },
                 {
                     action: {token: 'globalFunctions'},
-                    regex: /\b(keccak256|blake2b256|sha256|sigVerify|toBase58String|fromBase58String|toBase64String|fromBase64String|transactionById|transactionHeightById|addressFromRecipient|addressFromString|addressFromPublicKey|wavesBalance|assetBalance|getInteger|getBoolean|getBinary|getString|getInteger|getBoolean|getBinary|getString|getInteger|getBoolean|getBinary|getString|fraction|size|toBytes|take|drop|takeRight|dropRight|toString|isDefined|extract|throw)\b/
-                },
-                {
-                    action: {token: 'typesItalic'},
-                    regex: /\bAddress|Alias|Transfer|Order|DataEntry|GenesisTransaction|PaymentTransaction\b/
+                    regex: new RegExp(`(${
+                        suggestions.functions
+                            .map(({name}) => ['*', '/', '+'].includes(name) ? `\\${name}` : name)
+                            .sort((a, b) => a > b ? -1 : 1)
+                            .join('|')
+                        })`)
                 },
                 {regex: /'/, action: {token: 'literal', bracket: '@open', next: '@base58literal'}},
                 {regex: /'/, action: {token: 'literal', bracket: '@open', next: '@base64literal'}},
+                {regex: /'/, action: {token: 'literal', bracket: '@open', next: '@base16literal'}},
                 {include: '@whitespace'},
                 {regex: /[a-z_$][\w$]*/, action: {cases: {'@keywords': 'keyword'}}},
                 {regex: /"([^"\\]|\\.)*$/, action: {token: 'string.invalid'}},
@@ -72,9 +84,7 @@ export default function setupMonaco(){
 
             ],
             whitespace: [
-                //{ regex: /^[ \t\v\f]*#\w.*$/, action: { token: 'namespace.cpp' } },
                 {regex: /[ \t\v\f\r\n]+/, action: {token: 'white'}},
-                //{ regex: /\/\*/, action: { token: 'comment', next: '@comment' } },
                 {regex: /#.*$/, action: {token: 'comment'}},
             ],
             base58literal: [
@@ -91,21 +101,29 @@ export default function setupMonaco(){
                 },
                 {regex: /'/, action: {token: 'literal', bracket: '@close', next: '@pop'}}
             ],
+            base16literal: [
+                {
+                    regex: /[[A-Fa-f0-9]+/,
+                    action: {token: 'literal'}
+                },
+                {regex: /'/, action: {token: 'literal', bracket: '@close', next: '@pop'}}
+            ],
             string: [
                 {regex: /[^\\"]+/, action: {token: 'string'}},
                 {regex: /"/, action: {token: 'string.quote', bracket: '@close', next: '@pop'}}
             ]
         },
-        keywords, txTypes
+        keywords, transactionClasses
     };
 
-
-    //monaco.languages.setLanguageConfiguration(LANGUAGE_ID, {})
-    monaco.languages.setLanguageConfiguration(LANGUAGE_ID, {brackets: [['{', '}'], ['(', ')']]});
+    monaco.languages.setLanguageConfiguration(LANGUAGE_ID, {
+        brackets: [['{', '}'], ['(', ')']],
+        comments: {lineComment: '#'}
+    });
     monaco.languages.setMonarchTokensProvider(LANGUAGE_ID, language);
 
     monaco.languages.registerCompletionItemProvider(LANGUAGE_ID, {
-        triggerCharacters: ['.', ':'],
+        triggerCharacters: ['.', ':', '|', '@'],
         provideCompletionItems: languageService.completion.bind(languageService),
     });
 
@@ -118,7 +136,7 @@ export default function setupMonaco(){
         provideSignatureHelp: languageService.signatureHelp.bind(languageService),
     });
 
-    monaco.editor.defineTheme(THEME_ID, {
+    monaco.editor.defineTheme(DEFAULT_THEME_ID, {
         base: 'vs',
         colors: {},
         inherit: true,
@@ -126,13 +144,33 @@ export default function setupMonaco(){
             {token: 'keyword', foreground: '0000ff'},
             {token: 'string', foreground: 'a31415'},
             {token: 'globalFunctions', foreground: '484292', fontStyle: 'italic'},
-            //{token: 'number', foreground: '8e5c94'},
             {token: 'typesItalic', foreground: '4990ad', fontStyle: 'italic'},
             {token: 'types', foreground: '4990ad'},
             {token: 'literal', foreground: 'a31415', fontStyle: 'italic'},
-            {token: 'directive', foreground: 'aaaaaa'},
+            {token: 'directive', foreground: '#ff8b1e'},
             {token: 'annotation', foreground: 'f08c3a', fontStyle: 'bold'}
-            // {token: 'comment', foreground: '757575'}
         ]
+    });
+
+    monaco.editor.defineTheme(DARK_THEME_ID, {
+        base: 'vs-dark',
+        colors: {},
+        inherit: true,
+        rules: []
+    });
+    monaco.languages.typescript.javascriptDefaults.setCompilerOptions({
+        noLib: true,
+        module: ModuleKind.CommonJS,
+        moduleResolution: 2,
+        allowNonTsExtensions: true,
+        target: monaco.languages.typescript.ScriptTarget.ES2015,
+        // lib: ['es6', 'DOM', 'DOM.Iterable', 'ScriptHost', 'ES2015', 'ES2015.Promise']
+    });
+
+    monaco.languages.typescript.javascriptDefaults.addExtraLib(testTypings);
+
+    monaco.languages.typescript.javascriptDefaults.setDiagnosticsOptions({
+        // noSyntaxValidation: true,
+        //noSemanticValidation: true
     });
 }

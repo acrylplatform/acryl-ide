@@ -1,32 +1,14 @@
 const webpack = require('webpack');
 const copy = require('copy-webpack-plugin');
-const s3 = require('webpack-s3-plugin');
 const path = require('path');
-const fs = require('fs');
-const s3config = require('./s3.config');
+
 const autoprefixer = require('autoprefixer');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const HtmlWebpackExternalsPlugin = require('html-webpack-externals-plugin')
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
-
-const createS3Plugin = (isDev) => new s3({
-    s3Options: {
-        accessKeyId: s3config.accessKeyId,
-        secretAccessKey: s3config.secretAccessKey,
-        region: s3config.region,
-        //signatureVersion: 'v4'
-    },
-    s3UploadOptions: {
-        Bucket: isDev ? s3config.devBucket : s3config.bucket,
-        ACL: 'public-read',
-    },
-    cloudfrontInvalidateOptions: {
-        DistributionId: isDev ? s3config.devCloudFrontDistribution : s3config.cloudfrontDitstibutionId,
-        Items: ["/*"]
-    }
-});
 
 const flavors = {
     prod: {
@@ -42,16 +24,6 @@ const flavors = {
         mode: 'development',
         monacoPath: 'node_modules/monaco-editor/dev/vs',
         plugins: []
-    },
-    deploy: {
-        plugins: [
-            createS3Plugin()
-        ]
-    },
-    deployTest: {
-        plugins: [
-            createS3Plugin(true)
-        ]
     },
     bundleAnalyze: {
         plugins: [
@@ -85,7 +57,7 @@ module.exports = (args) => {
         },
         mode: conf.mode,
         output: {
-            filename: '[name].[chunkhash].bundle.js',
+            filename:'[name].[hash].bundle.js',
             // chunkFilename: '[name].[chunkhash].bundle.js',
             publicPath: '/',
             path: outputPath,
@@ -94,18 +66,37 @@ module.exports = (args) => {
         plugins: [
             new copy([
                 {from: 'build'},
-                {from: 'web'},
-                {from: 'node_modules/@waves/ride-js/dist/ride.min.js'},
-                {from: 'node_modules/react/umd/react.production.min.js'},
-                {from: 'node_modules/react-dom/umd/react-dom.production.min.js'}
+                // {from: 'web'},
+                {from: 'src/assets', to: 'assets'}
             ]),
             new HtmlWebpackPlugin({
                 template: 'template.html',
                 hash: true,
                 production: conf.mode === 'production'
             }),
+            new HtmlWebpackExternalsPlugin({
+              externals: [
+                {
+                  module: 'react',
+                  entry:  conf.mode === 'production' ? 'umd/react.production.min.js' :'umd/react.development.js' ,
+                  global: 'React'
+                },
+                {
+                  module: 'react-dom',
+                  entry: conf.mode === 'production' ?  'umd/react-dom.production.min.js' : 'umd/react-dom.development.js',
+                  global: 'ReactDOM'
+                },
+                {
+                  module: '@waves/ride-js',
+                  entry: 'dist/ride.min.js',
+                  global: 'RideJS'
+                }
+              ],
+              hash: true
+            }),
             new CleanWebpackPlugin('dist'),
-            new ForkTsCheckerWebpackPlugin()
+            new ForkTsCheckerWebpackPlugin(),
+            new webpack.HotModuleReplacementPlugin()
         ].concat(conf.plugins),
 
         //Enable sourcemaps for debugging webpack's output.
@@ -116,9 +107,9 @@ module.exports = (args) => {
             extensions: ['.ts', '.tsx', '.js', '.json', '.jsx', '.css'],
             alias: {
                 '@components': path.resolve(__dirname, "./src/components"),
-                '@selectors': path.resolve(__dirname, "./src/selectors"),
+                '@services': path.resolve(__dirname, "./src/services"),
                 '@src': path.resolve(__dirname, "./src"),
-                '@store': path.resolve(__dirname, "./src/store"),
+                '@stores': path.resolve(__dirname, "./src/stores"),
                 '@utils': path.resolve(__dirname, "./src/utils")
             }
         },
@@ -149,6 +140,10 @@ module.exports = (args) => {
         module: {
             rules: [
                 {
+                    test: /\.(png|jpg|svg|gif)$/,
+                    loader: "url-loader?limit=1000&name=assets/img/[name].[ext]",
+                },
+                {
                     test: /\.tsx?$/,
                     exclude: /node_modules/,
                     use: [
@@ -162,7 +157,26 @@ module.exports = (args) => {
                     ],
                 },
                 {
-                    include: /src|repl|normalize/,
+                    test: /\.less$/,
+                    use: [
+                        {loader: "style-loader"},
+                        {
+                            loader: "css-loader",
+                            options: {
+                                modules: true,
+                                localIdentName: '[folder]__[local]--[hash:base64:5]',
+                            }
+                        },
+                        {loader: "less-loader",
+                            options: {
+                                // modifyVars: themeVariables,
+                                root: path.resolve(__dirname, './')
+                            }
+                        },
+                    ]
+                },
+                {
+                    include: /rc-select|rc-tree|react-perfect-scrollbar|rc-dialog|rc-notification|rc-dropdown|rc-menu|rc-tooltip|rc-tabs|src|repl|normalize|antd/,
                     test: /\.css$/,
                     use: [
                         require.resolve('style-loader'),
@@ -194,18 +208,21 @@ module.exports = (args) => {
                             },
                         },
                     ],
-                }
+                },
             ]
         },
         externals: {
-            'react': 'React',
-            'react-dom': 'ReactDOM',
             'monaco-editor': 'monaco',
             'monaco-editor/esm/vs/editor/editor.api': 'monaco',
-            '@waves/ride-js': 'RideJS'
         },
         devServer: {
-            historyApiFallback: true
+            hot: true,
+            historyApiFallback: true,
+            proxy: {
+                '/api': {
+                    target: 'http://localhost:3000'
+                }
+            }
         }
     }
 };

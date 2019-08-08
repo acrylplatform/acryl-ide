@@ -1,4 +1,6 @@
 export const networks = {
-    testnet: {apiBase: 'https://testnodes.wavesnodes.com', chainId: 'T'},
-    mainnet: {apiBase: 'https://nodes.wavesplatform.com', chainId: 'W'}
-}
+    testnet: {apiBase: 'https://nodestestnet.acrylplatform.com/', chainId: 'K'},
+    mainnet: {apiBase: 'https://nodes.acrylplatform.com/', chainId: 'A'}
+};
+
+

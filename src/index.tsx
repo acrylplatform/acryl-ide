@@ -1,57 +1,47 @@
 import * as React from 'react';
 import { render } from 'react-dom';
-import { Provider  } from 'mobx-react';
-import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
-import createMuiTheme from '@material-ui/core/styles/createMuiTheme';
-import { App } from './app';
-import { RootStore } from '@src/mobx-store';
+import { Provider } from 'mobx-react';
+import App from './components/App';
+import { RootStore } from '@stores';
 import { autorun } from 'mobx';
-import { saveState, loadState } from '@utils/localStore';
-import Mediator from '@utils/Mediator';
+import { loadState, saveState } from '@utils/localStore';
 import setupMonaco from './setupMonaco';
-import 'normalize.css';
+import { mediator, testRunner, SharingService, HotKeysService } from '@services';
+import { createBrowserHistory } from 'history';
+import './global-styles';
+import notificationService from '@services/notificationService';
 
-import { Provider as  ComponentsMediatorProvider } from '@utils/ComponentsMediatorContext';
-
-import { setupTestRunner } from '@utils/testRunner';
-
-const theme = createMuiTheme({
-    palette: {
-        primary: {main: '#1f5af6'},
-        secondary: {main: '#ff4081'},
-
-    },
-    typography: {
-        useNextVariants: true,
-    },
-});
-
+// Store init
 const initState = loadState();
-// set version to 0 for old versionless storages
-if (initState && !initState.VERSION) {
-    initState.VERSION = 0;
-}
 const mobXStore = new RootStore(initState);
+autorun(() => {
+    console.dir(mobXStore);
+    saveState(mobXStore.serialize());
+}, {delay: 1000});
 
-autorun(() => saveState(mobXStore.serialize()), {delay: 1000});
-
-//setup monaco editor
+// Monaco setup
 setupMonaco();
 
-//setup components mediator
-let ComponentsMediator = new Mediator();
+// Services
+const history = createBrowserHistory();
+const sharingService = new SharingService(mobXStore, history);
+const hotKeys = new HotKeysService(mobXStore, mediator, history, testRunner, notificationService);
+hotKeys.subscribeHotkeys();
 
-//setup test runner
-setupTestRunner(ComponentsMediator);
+export const hotKeysMap = hotKeys.hotKeysMap;
+
+const inject = {
+    ...mobXStore,
+    sharingService,
+    notificationService
+};
 
 render(
-    <Provider {...mobXStore}>
-        <MuiThemeProvider theme={theme}>
-            <ComponentsMediatorProvider value={ComponentsMediator}>
-                <App/>
-            </ComponentsMediatorProvider>
-        </MuiThemeProvider>
+    <Provider {...inject}>
+        <App history={history}/>
     </Provider>
     ,
     document.getElementById('container')
 );
+
+

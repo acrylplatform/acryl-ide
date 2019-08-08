@@ -1,0 +1,72 @@
+@import (reference) "../../styles/colors";
+
+.workPanel {
+  display: flex;
+  flex: 1;
+  flex-direction: row;
+  overflow: hidden;
+}
+
+.mainPanel {
+  display: flex;
+  flex: 1 1 0;
+  min-height: 0;
+  min-width: 150px;
+  flex-direction: column;
+}
+
+.mainPanel_header {
+  display: flex;
+  height: 48px;
+  justify-content: space-between;
+}
+
+.mainPanel_tabs {
+  flex: 1;
+  overflow: hidden;
+}
+
+.mainPanel_account {
+  flex: 0 0 246px;
+  background-color: @basic50;
+  border-left: 1px solid @basic200;
+  border-right: 1px solid @basic200;
+  display: flex;
+  justify-content: center;
+  align-items: center
+}
+
+.mainPanel_settings {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 56px;
+  background-color: @basic50;
+  cursor: pointer;
+
+  &:hover {
+    background-color: @accent50;
+  }
+}
+
+.mainPanel_content {
+  position: relative;
+  display: flex;
+  flex: 1;
+  min-height: 0;
+  min-width: 0;
+}
+
+.mainPanel_footer {
+  min-height: 52px;
+  height: 52px;
+  background: @basic50;
+}
+
+.bottomBorder {
+   background-color:  @basic200;
+   height: 1px;
+   width: 100%;
+   margin-top: -1px;
+   z-index: 1;
+}
