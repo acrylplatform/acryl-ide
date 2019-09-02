@@ -6,7 +6,7 @@ import debounce from 'debounce';
 import { schemas, schemaTypeMap, validators } from '@waves/tx-json-schemas';
 import { range } from '@utils/range';
 import { AccountsStore, SettingsStore, SignerStore } from '@stores';
-import { broadcast, signTx, libs } from '@waves/waves-transactions';
+import { broadcast, signTx, libs } from '@acryl/acryl-transactions';
 import { signViaKeeper } from '@utils/waveskeeper';
 
 import MonacoEditor from 'react-monaco-editor';

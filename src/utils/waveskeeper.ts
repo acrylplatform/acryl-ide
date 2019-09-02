@@ -1,4 +1,4 @@
-import { TTx } from '@waves/waves-transactions';
+import { TTx } from '@acryl/acryl-transactions';
 import { range } from './range';
 
 export async function signViaKeeper(tx: TTx, proofN = 0): Promise<TTx> {

@@ -2,7 +2,7 @@ import { action, computed, observable } from 'mobx';
 
 import RootStore from '@stores/RootStore';
 import SubStore from '@stores/SubStore';
-import { issue, setAssetScript, setScript } from "@waves/waves-transactions";
+import { issue, setAssetScript, setScript } from "@acryl/acryl-transactions";
 import { FILE_TYPE } from "@stores";
 
 class SignerStore extends SubStore {
