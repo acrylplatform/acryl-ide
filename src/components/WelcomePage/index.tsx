@@ -94,7 +94,7 @@ export default class WelcomePage extends React.Component {
                 </div>
             </div>
 
-            <div className={styles.block}>
+            {/* <div className={styles.block}>
                 <div className={styles.H3}>Examples</div>
                 <div className={styles.text}>
                     IDE contains a lot of runnable Scripts, dApps and tests to help you get used to Ride language.
@@ -146,7 +146,7 @@ export default class WelcomePage extends React.Component {
                     This topic is for discussing your issues, requests, feedback and for announcements related to Acryl
                     Ride IDE and REPL
                 </div>
-            </div>
+            </div> */}
 
         </Scrollbar>;
     }
