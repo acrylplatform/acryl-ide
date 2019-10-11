@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './styles.less';
 import Scrollbar from '@src/components/Scrollbar';
-import { Line } from '@waves/waves-repl/dist/core/components/Line';
+import { Line } from '@acryl/acryl-repl/dist/core/components/Line';
 
 const links = {
     video: [

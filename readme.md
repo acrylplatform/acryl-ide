@@ -3,7 +3,7 @@
 This repository contains [Acryl Web IDE](https://ide.acrylplatform.com) for RIDE smart contracts
 You can set default seed, default network byte and node url via settings.
 
-Console documentation can be found [here](https://github.com/wavesplatform/waves-repl) 
+Console documentation can be found [here](https://github.com/acrylplatform/acryl-repl) 
 ## Usage
 ##### First steps
 
