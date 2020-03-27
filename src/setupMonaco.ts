@@ -14,8 +14,8 @@ const transactionClasses = suggestions.types.find(({name}) => name === 'Transact
 export const languageService = new MonacoLspServiceAdapter(new LspService());
 
 export const LANGUAGE_ID = 'ride';
-export const DEFAULT_THEME_ID = 'wavesDefaultTheme';
-export const DARK_THEME_ID = 'wavesDarkTheme';
+export const DEFAULT_THEME_ID = 'acrylDefaultTheme';
+export const DARK_THEME_ID = 'acrylDarkTheme';
 
 export default function setupMonaco() {
     // Since packaging is done by you, you need
