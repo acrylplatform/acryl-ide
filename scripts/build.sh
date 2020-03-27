@@ -8,12 +8,12 @@ else
     echo "Using compiler from NODE branch/commit: $COMPILER_PARAM"
     mkdir temp
     cd temp
-    git clone 'http://github.com/wavesplatform/waves'
+    git clone 'http://github.com/acrylplatform/waves'
     cd waves
     git checkout $COMPILER_PARAM
     sbt langJS/fullOptJS
     cd ..
-    git clone 'https://github.com/wavesplatform/ride-js'
+    git clone 'https://github.com/acrylplatform/ride-js'
     cp waves/lang/js/target/lang-opt.js ride-js/src
     cd ride-js
     npm i
