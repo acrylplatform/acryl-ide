@@ -6,7 +6,6 @@ import classNames from 'classnames';
 import Button from '@src/components/Button';
 import { copyToClipboard } from '@utils/copyToClipboard';
 import styles from '../styles.less';
-import ShareFileButton from '@components/MainPanelFooter/ShareFileButton';
 import { NotificationService } from '@services/notificationService';
 
 interface IInjectedProps {

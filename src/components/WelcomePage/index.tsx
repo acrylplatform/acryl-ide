@@ -1,65 +1,14 @@
 import React from 'react';
 import styles from './styles.less';
 import Scrollbar from '@src/components/Scrollbar';
-import { Line } from '@acryl/acryl-repl/dist/core/components/Line';
-
-const links = {
-    video: [
-        {
-            title: 'Using Smart Contracts with Waves Console',
-            link: 'https://www.youtube.com/watch?v=sOZuE9Ebfko&t=557s'
-        },
-        {
-            title: 'Multi Signature Using Waves IDE & WavesJ',
-            link: 'https://www.youtube.com/watch?v=o2msjSo0y0o&t=32s'
-        },
-        {
-            title: 'Escrow Using Waves IDE & WavesJ',
-            link: 'https://www.youtube.com/watch?v=31dwYcgb65M&t=381s'
-        },
-        {
-            title: 'Waves Console Commands Example',
-            link: 'https://www.youtube.com/watch?v=gBgLjg6nrvA&amp=&feature=youtu.be'
-        },
-        {
-            title: 'Create MultiSig Account via Waves IDE tools',
-            link: 'https://www.youtube.com/watch?v=8DKRGnwsBjk'
-        }
-    ],
-    guides: [
-        {
-            title: 'The First Part',
-            link: 'https://blog.wavesplatform.com/the-hitchhikers-guide-to-waves-smart-contracts-part-1-b80aa47a745a'
-        },
-        {
-            title: 'The Second Part',
-            link: 'https://blog.wavesplatform.com/the-hitchhikers-guide-to-waves-smart-contracts-part-2-44621fd5a007'
-        },
-    ],
-    forum: [
-        {
-            title: 'DevTools: IDE + REPL',
-            link: 'https://forum.wavesplatform.com/t/devtools-ide-repl/1992'
-        },
-    ], tools: [
-        {title: 'VSCode plugin', link: ''},
-        {title: 'Surfboard CLI tool', link: ''},
-        {title: 'Acryl private node', link: ''}
-    ]
-};
 
 const rideDocs = {
     title: 'ride documentation',
-    link: 'https://docs.wavesplatform.com/en/ride/about-ride.html'
+    link: 'https://docs.acrylplatform.com/en/ride/about-ride.html'
 };
 const dapDocs = {
     title: 'writing dApps',
-    link: 'https://docs.wavesplatform.com/en/smart-contracts/writing-dapps.html'
-};
-
-const toolingArticle = {
-    title: 'Professional toolkit for coding with RIDE',
-    link: 'https://blog.wavesplatform.com/how-to-build-deploy-and-test-a-waves-ride-dapp-785311f58c2'
+    link: 'https://docs.acrylplatform.com/en/smart-contracts/writing-dapps.html'
 };
 
 interface ILinkProps {
