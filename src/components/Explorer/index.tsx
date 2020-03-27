@@ -196,7 +196,7 @@ class Explorer extends React.Component<IInjectedProps, IFileExplorerState> {
                                     </div>
                                 </MenuItem>
                             </SubMenu>
-                            {/* {this.getExamplesMenu(libraryContent)} */}
+                            {this.getExamplesMenu(libraryContent)}
                         </SubMenu>
                     </Menu>
                 </div>
