@@ -20,7 +20,7 @@ else
     npm run build
     npm link
     cd ../../
-    npm link @waves/ride-js
+    npm link @acryl/ride-js
 fi
 
 npm run build-monaco
@@ -30,5 +30,5 @@ rm -rf temp
 
 if [ -z "$COMPILER_PARAM" ];
     then echo "Using compiler from package.json"
-    npm unlink --no-save @waves/ride-js
+    npm unlink --no-save @acryl/ride-js
 fi

@@ -1,4 +1,4 @@
-import compiler, { ICompilationError, ICompilationResult } from '@waves/ride-js';
+import compiler, { ICompilationError, ICompilationResult } from '@acryl/ride-js';
 
 export interface IRideFileInfo {
     readonly stdLibVersion: number,

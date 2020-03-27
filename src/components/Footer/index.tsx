@@ -6,8 +6,8 @@ import { TAB_TYPE, TabsStore } from "@stores";
 
 const links = {
     Demotour: '',
-    Docs: 'https://docs.wavesplatform.com/en/smart-contracts/writing-dapps.html',
-    ['Env doc']: 'http://wavesplatform.github.io/js-test-env',
+    Docs: 'https://docs.acrylplatform.com/en/smart-contracts/writing-dapps.html',
+    ['Env doc']: 'http://acrylplatform.github.io/js-test-env',
     Community: '',
     git: 'https://github.com/acrylplatform/acryl-ide'
 };

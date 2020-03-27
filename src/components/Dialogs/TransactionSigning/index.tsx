@@ -3,7 +3,7 @@ import { inject, observer } from 'mobx-react';
 import { RouteComponentProps, withRouter } from 'react-router';
 import * as monaco from 'monaco-editor/esm/vs/editor/editor.api';
 import debounce from 'debounce';
-import { schemas, schemaTypeMap, validators } from '@waves/tx-json-schemas';
+import { schemas, schemaTypeMap, validators } from '@acryl/tx-json-schemas';
 import { range } from '@utils/range';
 import { AccountsStore, SettingsStore, SignerStore } from '@stores';
 import { broadcast, signTx, libs } from '@acryl/acryl-transactions';

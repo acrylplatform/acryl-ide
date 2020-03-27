@@ -1,4 +1,4 @@
-import { LspService } from '@waves/ride-language-server/LspService';
+import { LspService } from '@acryl/ride-language-server/LspService';
 import * as monaco from 'monaco-editor/esm/vs/editor/editor.api';
 import ITextModel = monaco.editor.ITextModel;
 import IMarkerData = monaco.editor.IMarkerData;

@@ -1,4 +1,4 @@
-import { addEnvFunctionsToGlobal } from '@waves/js-test-env';
+import { addEnvFunctionsToGlobal } from '@acryl/js-test-env';
 import { TSuite } from '@services/TestRunner';
 
 const convert = (x: TSuite): any => {

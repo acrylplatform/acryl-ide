@@ -87,7 +87,7 @@ module.exports = (args) => {
                   global: 'ReactDOM'
                 },
                 {
-                  module: '@waves/ride-js',
+                  module: '@acryl/ride-js',
                   entry: 'dist/ride.min.js',
                   global: 'RideJS'
                 }
