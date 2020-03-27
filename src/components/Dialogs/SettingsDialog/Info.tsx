@@ -28,13 +28,13 @@ const infoData: TInfoData = {
     },
     Testnet: {
         title: 'Testnet',
-        text: 'The testnet(test network) is an alternative Waves blockchain, to be used for testing.',
+        text: 'The testnet(test network) is an alternative Acryl blockchain, to be used for testing.',
         more: 'https://docs.acrylplatform.com/en/blockchain/test-network.html'
     },
     NodeTimeout: {
         title: 'Node Timeout',
         text: 'Default timeout for node request in milliseconds. E.g: how long we should wait for transaction via waitForTx function\.If set to 0, 20 seconds will be used',
-        more: 'https://acrylplatform.github.io/waves-transactions/interfaces/nodeinteraction.inoderequestoptions.html'
+        more: 'https://acrylplatform.github.io/acryl-transactions/interfaces/nodeinteraction.inoderequestoptions.html'
     },
     TestTimeout: {
         title: 'Mocha async timeout',
