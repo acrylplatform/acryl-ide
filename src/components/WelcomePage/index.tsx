@@ -43,60 +43,13 @@ export default class WelcomePage extends React.Component {
                 </div>
             </div>
 
-            {/* <div className={styles.block}>
+            <div className={styles.block}>
                 <div className={styles.H3}>Examples</div>
                 <div className={styles.text}>
                     IDE contains a lot of runnable Scripts, dApps and tests to help you get used to Ride language.
                     Check them in Library menu
                 </div>
             </div>
-
-            <div className={styles.block}>
-                <div className={styles.H3}>Other tools</div>
-                <div className={styles.text}>
-                    Web IDE is just a starting point. For professional development we recommend using our offline tools.
-                    Check <Link {...toolingArticle}/>
-                    <div className={styles.tools_list}>
-                        {links.tools.map(({title, link}, i) =>
-                            <div key={i + 1} className={styles.row}>
-                                {i + 1}.&nbsp;<Link link={link} title={title}/>
-                            </div>)
-                        }
-                    </div>
-                </div>
-            </div>
-
-            <div className={styles.column_block}>
-                <div className={styles.column}>
-                    <div className={styles.H3}>Video Tutorials</div>
-                    {links.video.map(({title, link}, i) =>
-                        <div key={i + 1} className={styles.row}>
-                            {i + 1}.&nbsp;<Link link={link} title={title}/>
-                        </div>)}
-                </div>
-                <div className={styles.column}>
-                    <div className={styles.H3}>Hitchhiker’s Guide to Acryl Smart Contracts</div>
-                    {links.guides.map(({title, link}, i) =>
-                        <div key={i + 1} className={styles.row}>
-                            {i + 1}.&nbsp;<a target="_blank" className={styles.link} href={link}>{title}</a>
-                        </div>)}
-                </div>
-            </div>
-
-            <div className={styles.block}>
-                <div className={styles.H3}>Forum</div>
-
-                {links.forum.map(({title, link}, i) =>
-                    <div key={i + 1} className={styles.row}>
-                        {i + 1}.&nbsp;<a target="_blank" className={styles.link} href={link}>{title}</a>
-                    </div>)}
-
-                <div className={styles.text}>
-                    This topic is for discussing your issues, requests, feedback and for announcements related to Acryl
-                    Ride IDE and REPL
-                </div>
-            </div> */}
-
         </Scrollbar>;
     }
 
