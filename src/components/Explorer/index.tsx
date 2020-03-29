@@ -186,11 +186,11 @@ class Explorer extends React.Component<IInjectedProps, IFileExplorerState> {
                                      </>}
                             >
                                 <MenuItem onClick={this.handleOpenWelcomePage}>
-                                    <div className="systemdoc-16-basic-600"/>
+                                    <div className="accountdoc-16-basic-600"/>
                                     <div className={classNames(styles.exampleFile, styles.fileName)}>Welcome Page</div>
                                 </MenuItem>
                                 <MenuItem onClick={this.handleOpenKeyboardShortcutsPage}>
-                                    <div className="systemdoc-16-basic-600"/>
+                                    <div className="accountdoc-16-basic-600"/>
                                     <div className={classNames(styles.exampleFile, styles.fileName)}>Keyboard
                                         shortcuts
                                     </div>
