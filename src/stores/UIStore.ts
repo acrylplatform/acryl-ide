@@ -22,7 +22,7 @@ interface IResizableState {
 const isResizableState = (val: any): val is IResizableState => 'size' in val && 'isOpened' in val;
 
 class UIStore extends SubStore {
-    resizables: { [key: string]: IResizableState } = observable({
+    resizables = observable({
         repl: {
             size: 200,
             isOpened: true,
