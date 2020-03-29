@@ -1,12 +1,11 @@
 import * as React from 'react';
 import { IAccount } from '@stores';
 import Select from '@src/components/Select';
-import Button from '@src/components/Button';
 import styles from './styles.less';
 import classNames from 'classnames';
 
 interface ITransactionSigningFormProps {
-    signType: 'account' | 'seed' | 'wavesKeeper'
+    signType: 'account' | 'seed'
     onSignTypeChange: (v: string) => void;
     seed: string;
     availableProofIndexes: number[];
@@ -36,18 +35,13 @@ export default class TransactionSigningFormComponent extends React.Component<ITr
 
 
     render(): React.ReactNode {
-        const keeperEnabled = typeof window.Waves === 'object';
         const {
-            signType, onSignTypeChange, seed, proofIndex, availableProofIndexes, disableAwaitingConfirmation,
-            onProofNChange, accounts, selectedAccount, onAccountChange, signDisabled, isAwaitingConfirmation
+            signType, onSignTypeChange, seed, proofIndex, availableProofIndexes, onProofNChange, accounts, selectedAccount, onAccountChange, signDisabled, isAwaitingConfirmation
         } = this.props;
         const signOptions = [{value: 'seed', title: 'Seed phrase'}, {value: 'account', title: 'IDE Account'}];
-        if (keeperEnabled) signOptions.push({value: 'wavesKeeper', title: 'Waves Keeper'});
         const {justSigned} = this.state;
         return isAwaitingConfirmation
-            ? <WaitForWavesKeeper
-                onCancel={disableAwaitingConfirmation}
-            />
+            ? <div></div>
             : (
                 <div className={styles.signingForm}>
                     <div className={styles.signing_field}>
@@ -84,10 +78,6 @@ export default class TransactionSigningFormComponent extends React.Component<ITr
                                     onChange={this.onSeedChange}
                                     required
                                 />
-                            </>,
-                            wavesKeeper: <>
-                                <div className={styles.signing_title}/>
-                                <input className={styles.signing_input} value={''} disabled/>
                             </>
                         }[signType]}
                     </div>
@@ -122,12 +112,3 @@ export default class TransactionSigningFormComponent extends React.Component<ITr
             );
     }
 }
-
-const WaitForWavesKeeper = ({onCancel}: { onCancel: () => void }) =>
-    <div className={styles.signing_WaitKeeperRoot}>
-        <div className={styles.signing_WaitKeeperText}>
-            <div className={styles.signing_title_blue}>Waiting for WavesKeeper confirmation</div>
-            <div className={styles.signing_loading}>Loading...</div>
-        </div>
-        <Button className={styles.signing_WaitKeeperBtn} onClick={onCancel}>Cancel</Button>
-    </div>;
