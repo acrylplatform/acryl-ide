@@ -25,3 +25,8 @@ npm start
 ```npm
 npm run dist
 ```
+
+## Update icon style
+```npm
+npm run update-icon-mixins
+```
