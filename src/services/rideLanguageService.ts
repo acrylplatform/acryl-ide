@@ -1,10 +1,11 @@
 import { LspService } from '@acryl/ride-language-server/LspService';
-import * as monaco from 'monaco-editor/esm/vs/editor/editor.api';
+import monaco from 'monaco-editor/esm/vs/editor/editor.api';
 import ITextModel = monaco.editor.ITextModel;
 import IMarkerData = monaco.editor.IMarkerData;
 import CompletionList = monaco.languages.CompletionList;
 import Hover = monaco.languages.Hover;
 import SignatureHelp = monaco.languages.SignatureHelp;
+import SignatureHelpResult = monaco.languages.SignatureHelpResult;
 import { TextDocument } from 'vscode-languageserver-types';
 
 export class MonacoLspServiceAdapter {
@@ -46,12 +47,15 @@ export class MonacoLspServiceAdapter {
         return {contents : this.languageService.hover(textDocument, convertedPosition).contents.map(v => ({value: v}))};
     }
 
-    signatureHelp(model: ITextModel, position: monaco.Position): SignatureHelp {
-        const { textDocument, convertedPosition } = getTextAndPosition(model, position);
+    signatureHelp(model: ITextModel, position: monaco.Position): SignatureHelpResult {
+        const {textDocument, convertedPosition} = getTextAndPosition(model, position);
         // ToDo: Correctly fix type instead of plain casting
-        return this.languageService.signatureHelp(textDocument, convertedPosition) as SignatureHelp;
+        return {
+            value: this.languageService.signatureHelp(textDocument, convertedPosition) as SignatureHelp,
+            dispose: () => {
+            }
+        };
     }
-
 }
 
 function getTextAndPosition(model: ITextModel, position: monaco.Position) {
@@ -63,3 +67,5 @@ function getTextAndPosition(model: ITextModel, position: monaco.Position) {
         }
     };
 }
+
+export default new MonacoLspServiceAdapter(new LspService());
