@@ -1,7 +1,7 @@
 import * as monaco from 'monaco-editor/esm/vs/editor/editor.api';
 import { languages } from 'monaco-editor/esm/vs/editor/editor.api';
-import { LspService } from '@waves/ride-language-server/LspService';
-import { Suggestions } from '@waves/ride-language-server/suggestions';
+import { LspService } from '@acryl/ride-language-server/LspService';
+import { Suggestions } from '@acryl/ride-language-server/suggestions';
 import { MonacoLspServiceAdapter } from '@utils/MonacoLspServiceAdapter';
 import testTypings from './json-data/test-typings.json';
 import ModuleKind = languages.typescript.ModuleKind;
@@ -14,8 +14,8 @@ const transactionClasses = suggestions.types.find(({name}) => name === 'Transact
 export const languageService = new MonacoLspServiceAdapter(new LspService());
 
 export const LANGUAGE_ID = 'ride';
-export const DEFAULT_THEME_ID = 'wavesDefaultTheme';
-export const DARK_THEME_ID = 'wavesDarkTheme';
+export const DEFAULT_THEME_ID = 'acrylDefaultTheme';
+export const DARK_THEME_ID = 'acrylDarkTheme';
 
 export default function setupMonaco() {
     // Since packaging is done by you, you need

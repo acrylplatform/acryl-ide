@@ -3,11 +3,10 @@ import { inject, observer } from 'mobx-react';
 import { RouteComponentProps, withRouter } from 'react-router';
 import * as monaco from 'monaco-editor/esm/vs/editor/editor.api';
 import debounce from 'debounce';
-import { schemas, schemaTypeMap, validators } from '@waves/tx-json-schemas';
+import { schemas, schemaTypeMap, validators } from '@acryl/tx-json-schemas';
 import { range } from '@utils/range';
 import { AccountsStore, SettingsStore, SignerStore } from '@stores';
 import { broadcast, signTx, libs } from '@acryl/acryl-transactions';
-import { signViaKeeper } from '@utils/waveskeeper';
 
 import MonacoEditor from 'react-monaco-editor';
 import Dialog from '@src/components/Dialog';
@@ -33,7 +32,7 @@ interface ITransactionEditorState {
     proofIndex: number
     seed: string
     selectedAccount: number
-    signType: 'account' | 'seed' | 'wavesKeeper'
+    signType: 'account' | 'seed'
     isAwaitingConfirmation: boolean
 }
 
@@ -63,22 +62,7 @@ class TransactionSigning extends React.Component<ITransactionEditorProps, ITrans
 
         let signedTx: any;
         //ToDo: try to remove 'this.editor.updateOptions' after react-monaco-editor update
-        if (signType === 'wavesKeeper') {
-            this.setState({isAwaitingConfirmation: true});
-            this.editor.updateOptions({readOnly: true});
-            try {
-                signedTx = await signViaKeeper(tx, proofIndex);
-            } catch (e) {
-                console.error(e);
-                this.setState({isAwaitingConfirmation: false});
-                this.editor.updateOptions({readOnly: false});
-                return false;
-            }
-            this.setState({isAwaitingConfirmation: false});
-            this.editor.updateOptions({readOnly: false});
-        } else {
-            signedTx = signTx(tx, {[proofIndex]: signType === 'seed' ? seed : accounts[selectedAccount].seed});
-        }
+        signedTx = signTx(tx, {[proofIndex]: signType === 'seed' ? seed : accounts[selectedAccount].seed});
 
         let newEditorValue = JSON.stringify(signedTx, null, 2);
         // Find all unsafe longs and replace them in target json string
