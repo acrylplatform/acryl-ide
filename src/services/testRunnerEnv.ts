@@ -1,4 +1,4 @@
-import { addEnvFunctionsToGlobal } from '@waves/js-test-env';
+import augment, { TSetupAccountsFunc } from '@acryl/js-test-env/augment';
 import { TSuite } from '@services/TestRunner';
 
 const convert = (x: TSuite): any => {
@@ -10,20 +10,11 @@ const convert = (x: TSuite): any => {
     };
 };
 
-export const injectTestEnvironment = (iframeWindow: any) => {
+export const injectTestEnvironment = (iframeWindow: any,
+    setupAccountsWrapper?: (f: TSetupAccountsFunc) => TSetupAccountsFunc) => {
     iframeWindow.env = {};
 
-    addEnvFunctionsToGlobal(iframeWindow);
-
-    Object.defineProperty(iframeWindow, 'WavesKeeper', {
-        get: () => {
-            const keeper = WavesKeeper;
-            if (keeper == null) {
-                throw new Error('WavesKeeper API not available. Make sure you have WavesKeeper installed');
-            }
-            return keeper;
-        }
-    });
+    augment(iframeWindow, {setupAccountsWrapper});
 
     iframeWindow.compileTest = (test: string) => {
         try {

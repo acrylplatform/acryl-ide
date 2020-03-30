@@ -6,7 +6,6 @@ import classNames from 'classnames';
 import Button from '@src/components/Button';
 import { copyToClipboard } from '@utils/copyToClipboard';
 import styles from '../styles.less';
-import ShareFileButton from '@components/MainPanelFooter/ShareFileButton';
 import { NotificationService } from '@services/notificationService';
 
 interface IInjectedProps {
@@ -68,7 +67,7 @@ class ContractFooter extends React.Component<IProps> {
             </div>
 
             <div className={styles.buttonSet}>
-                {!file.readonly && <ShareFileButton file={file}/>}
+                {/* {!file.readonly && <ShareFileButton file={file}/> } */}
                 <Button type="action-gray" disabled={!copyBase64Handler}
                         onClick={copyBase64Handler}
                         title="Copy base64 compiled script to clipboard"

@@ -20,7 +20,7 @@ class TestFooter extends React.Component<IProps> {
             <div className={rootClassName}>
                 <div className={styles.left}/>
                 <div className={styles.buttonSet}>
-                    {!file.readonly && <ShareFileButton file={file}/>}
+                    {/*!file.readonly && <ShareFileButton file={file}/>*/}
                     <RunTestButton file={file}/>
                 </div>
             </div>

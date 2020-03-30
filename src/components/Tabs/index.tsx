@@ -10,7 +10,6 @@ import Scrollbar from '@components/Scrollbar';
 import Dropdown from 'rc-dropdown';
 import Menu from 'rc-menu';
 import * as styles from './styles.less';
-import ScrollBar from 'react-perfect-scrollbar';
 import ReactResizeDetector from 'react-resize-detector';
 import NewFileBtn from '@components/NewFileBtn';
 
@@ -20,7 +19,6 @@ const MIN_TAB_WIDTH = parseInt(
 const MAX_TAB_WIDTH = parseInt(
     getComputedStyle(document.documentElement).getPropertyValue('--tab-component-max-width')
 ) || 240;
-const HIDDEN_TAB_BTN_WIDTH = 85;
 
 const TAB_FONT = '14px Roboto';
 

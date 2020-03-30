@@ -5,12 +5,11 @@ const files = [
     'node_modules/typescript/lib/lib.es6.d.ts',
     'node_modules/typescript/lib/lib.es2015.d.ts',
     'node_modules/typescript/lib/lib.es2015.promise.d.ts',
-    'node_modules/@waves/js-test-env/dist/augmentedGlobal.d.ts',
-    'node_modules/@waves/waves-transactions/dist/transactions.d.ts',
+    'node_modules/@acryl/js-test-env/dist/augmentedGlobal.d.ts',
+    'node_modules/@acryl/acryl-transactions/dist/transactions.d.ts',
     'node_modules/@types/mocha/index.d.ts',
     'node_modules/@types/chai/index.d.ts',
     'node_modules/@types/chai-as-promised/index.d.ts',
-    'node_modules/@waves/waveskeeper-types/globals.d.ts'
 ];
 
 const ignore = [
@@ -28,7 +27,7 @@ const out = files.map(path => {
     if (fs.existsSync(path)) {
         const text = fs.readFileSync(path, 'utf8');
         console.log(`${path} was read successfully`);
-        return path.includes('js-test-env') || path.includes('waves-transactions')
+        return path.includes('js-test-env') || path.includes('acryl-transactions')
             ? ((out) => {
                 ignore.forEach(item => out = out.replace(new RegExp(item.search, 'gm'), item.replace));
                 return out

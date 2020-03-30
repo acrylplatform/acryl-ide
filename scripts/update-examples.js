@@ -6,7 +6,7 @@ const filePath = '../src/json-data/ride-examples.json';
 
 const categories = ['smart-accounts', 'smart-assets', 'ride4dapps'];
 
-const apiEndpoint = 'https://api.github.com/repos/wavesplatform/ride-examples/contents/';
+const apiEndpoint = 'https://api.github.com/repos/acrylplatform/ride-examples/contents/';
 
 async function updateExamples() {
 

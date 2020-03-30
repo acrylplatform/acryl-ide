@@ -1,7 +1,7 @@
 import { observable, action, computed, reaction, runInAction, autorun } from 'mobx';
 
 import { generateMnemonic } from 'bip39';
-import { libs, nodeInteraction } from '@waves/waves-transactions';
+import { libs, nodeInteraction } from '@acryl/acryl-transactions';
 
 const {privateKey, publicKey, address} = libs.crypto;
 

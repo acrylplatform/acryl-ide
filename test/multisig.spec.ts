@@ -1,7 +1,7 @@
 import { describe, it } from "mocha";
 import { expect } from "chai";
 import { multisig } from '../src/contractGenerators';
-import { compile } from '@waves/ride-js';
+import { compile } from '@acryl/ride-js';
 
 describe('Multisig generator', () => {
     it('Should generate 2 of 3 contract', () => {

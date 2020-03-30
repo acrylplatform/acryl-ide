@@ -263,7 +263,7 @@ class FilesStore extends SubStore {
 
     @action
     private async updateExamples() {
-        const apiEndpoint = 'https://api.github.com/repos/wavesplatform/ride-examples/contents/';
+        const apiEndpoint = 'https://api.github.com/repos/acrylplatform/ride-examples/contents/';
         const repoInfoResp = await axios.get(apiEndpoint,
             {headers: {'If-None-Match': this.examples.eTag}, validateStatus: () => true});
 

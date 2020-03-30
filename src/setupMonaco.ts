@@ -1,21 +1,16 @@
-import * as monaco from 'monaco-editor/esm/vs/editor/editor.api';
-import { languages } from 'monaco-editor/esm/vs/editor/editor.api';
-import { LspService } from '@waves/ride-language-server/LspService';
-import { Suggestions } from '@waves/ride-language-server/suggestions';
-import { MonacoLspServiceAdapter } from '@utils/MonacoLspServiceAdapter';
+import monaco, { languages } from 'monaco-editor/esm/vs/editor/editor.api';
+import { Suggestions } from '@acryl/ride-language-server/suggestions';
 import testTypings from './json-data/test-typings.json';
 import ModuleKind = languages.typescript.ModuleKind;
-
+import rideLanguageService from '@services/rideLanguageService';
 
 const suggestions = new Suggestions();
 suggestions.updateSuggestions(3);
 const transactionClasses = suggestions.types.find(({name}) => name === 'Transaction')!.type;
 
-export const languageService = new MonacoLspServiceAdapter(new LspService());
-
 export const LANGUAGE_ID = 'ride';
-export const DEFAULT_THEME_ID = 'wavesDefaultTheme';
-export const DARK_THEME_ID = 'wavesDarkTheme';
+export const DEFAULT_THEME_ID = 'acrylDefaultTheme';
+export const DARK_THEME_ID = 'acrylDarkTheme';
 
 export default function setupMonaco() {
     // Since packaging is done by you, you need
@@ -124,16 +119,16 @@ export default function setupMonaco() {
 
     monaco.languages.registerCompletionItemProvider(LANGUAGE_ID, {
         triggerCharacters: ['.', ':', '|', '@'],
-        provideCompletionItems: languageService.completion.bind(languageService),
+        provideCompletionItems: rideLanguageService.completion.bind(rideLanguageService),
     });
 
     monaco.languages.registerHoverProvider(LANGUAGE_ID, {
-        provideHover: languageService.hover.bind(languageService),
+        provideHover: rideLanguageService.hover.bind(rideLanguageService),
     });
 
     monaco.languages.registerSignatureHelpProvider(LANGUAGE_ID, {
         signatureHelpTriggerCharacters: ['('],
-        provideSignatureHelp: languageService.signatureHelp.bind(languageService),
+        provideSignatureHelp: rideLanguageService.signatureHelp.bind(rideLanguageService),
     });
 
     monaco.editor.defineTheme(DEFAULT_THEME_ID, {
